@@ -1,6 +1,7 @@
 use crate::internals::bptree::cursor::CursorReadOps;
 use crate::internals::bptree::cursor::{CursorRead, CursorWrite, SuperBlock};
 use crate::internals::bptree::iter::{Iter, KeyIter, RangeIter, ValueIter};
+#[cfg(feature = "maps")]
 use crate::internals::bptree::mutiter::RangeMutIter;
 use crate::internals::lincowcell::LinCowCellCapable;
 use std::borrow::Borrow;
@@ -279,6 +280,7 @@ impl<K: Clone + Ord + Debug + Sync + Send + 'static, V: Clone + Sync + Send + 's
     }
 
     /// Iterate over a mutable range of values
+    #[cfg(feature = "maps")]
     pub fn range_mut<R, T>(&mut self, range: R) -> RangeMutIter<K, V>
     where
         K: Borrow<T>,

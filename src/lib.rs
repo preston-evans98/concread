@@ -45,8 +45,11 @@
 static ALLOC: dhat::Alloc = dhat::Alloc;
 
 #[cfg(feature = "maps")]
-#[macro_use]
+#[cfg_attr(feature = "maps", macro_use)]
 extern crate smallvec;
+
+#[cfg(feature = "maps")]
+compile_error!("The 'maps' feature enables code that may contain undefined behavior! Only the min-bptree feature is known to be safe");
 
 pub mod cowcell;
 pub use cowcell::CowCell;
@@ -62,13 +65,13 @@ pub mod arcache;
 pub mod threadcache;
 
 // This is where the scary rust lives.
-#[cfg(feature = "maps")]
+#[cfg(any(feature = "maps", feature = "min-bptree"))]
 pub mod internals;
 // This is where the good rust lives.
-#[cfg(feature = "maps")]
+#[cfg(any(feature = "maps", feature = "min-bptree"))]
 mod utils;
 
-#[cfg(feature = "maps")]
+#[cfg(any(feature = "maps", feature = "min-bptree"))]
 pub mod bptree;
 #[cfg(feature = "maps")]
 pub mod hashmap;

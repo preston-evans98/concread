@@ -10,7 +10,9 @@
 //! ⚠️   ⚠️   ⚠️
 
 pub mod bptree;
+#[cfg(feature = "maps")]
 pub mod hashmap;
+#[cfg(feature = "maps")]
 pub mod hashtrie;
 pub mod lincowcell;
 

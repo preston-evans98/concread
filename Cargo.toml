@@ -42,6 +42,8 @@ arcache-is-hashmap = ["arcache"]
 arcache-is-hashtrie = ["arcache"]
 simd_support = []
 
+min-bptree = ["crossbeam-utils", "smallvec"]
+
 [dependencies]
 ahash = { version = "0.8", optional = true }
 crossbeam-utils = { version = "0.8.12", optional = true }

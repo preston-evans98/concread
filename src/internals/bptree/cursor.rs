@@ -11,6 +11,7 @@ use std::fmt::Debug;
 use std::mem;
 
 use super::iter::{Iter, KeyIter, RangeIter, ValueIter};
+#[cfg(feature = "maps")]
 use super::mutiter::RangeMutIter;
 use super::states::*;
 use std::ops::RangeBounds;
@@ -557,6 +558,7 @@ impl<K: Clone + Ord + Debug, V: Clone> CursorWrite<K, V> {
         Node::<K, V>::tree_density_raw(self.get_root())
     }
 
+    #[cfg(feature = "maps")]
     pub(crate) fn range_mut<'n, R, T>(&'n mut self, range: R) -> RangeMutIter<'n, 'n, K, V>
     where
         K: Borrow<T>,
@@ -1096,7 +1098,7 @@ where
     K: Clone + Ord + Debug + 'a,
     V: Clone,
 {
-    if unsafe {&* node}.meta.is_leaf() {
+    if unsafe { &*node }.meta.is_leaf() {
         leaf_ref!(node, K, V).get_mut_ref(k)
     } else {
         // This nmref binds the life of the reference ...
